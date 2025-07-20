@@ -1,0 +1,36 @@
+name: 'crie'
+description: 'Universal meta-linter using containerized execution'
+
+inputs:
+  runtime:
+    description: 'Container runtime to use (podman, docker)'
+    required: false
+    default: 'podman'
+  only_changed_files:
+    description: 'Only process files changed from a target branch'
+    required: false
+    default: false
+  target_branch:
+    description: 'The branch to reference to calculate files that have changed'
+    required: false
+    default: 'origin/main'
+  command:
+    description: 'The crie command to run'
+    required: false
+    default: 'chk'
+  show_passes:
+    description: 'List files even if they pass'
+    required: false
+    default: true
+  fail_fast:
+    description: 'Exit as soon as one stage fails'
+    required: false
+    default: false
+  language:
+    description: 'If set then only process files associated with the given language'
+    required: false
+    default: ""
+  json_logging:
+    description: 'enable json logging format'
+    required: false
+    default: false
