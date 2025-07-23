@@ -1,11 +1,12 @@
-
-
 # Crie GitHub Action
+
 A straightforward meta-linter GitHub Action that covers all programming languages, making static analysis accessible for development teams.
 
 ## Usage
+
 Add this action to your GitHub workflow:
-``` yaml
+
+```yaml
 name: Code Quality
 on: [push, pull_request]
 
@@ -20,7 +21,6 @@ jobs:
           target_branch: origin/main # this is the branch to compare our current workspace against to detect changes
 ```
 
-
 ## Repository
-Find the source code and contribute at: https://github.com/tyhal/crie
 
+Find the source code and contribute at: https://github.com/tyhal/crie

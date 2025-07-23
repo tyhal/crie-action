@@ -1,6 +1,5 @@
 name: 'crie'
 description: 'Universal meta-linter using containerized execution'
-
 inputs:
   runtime:
     description: 'Container runtime to use (podman, docker)'
@@ -34,3 +33,9 @@ inputs:
     description: 'enable json logging format'
     required: false
     default: false
+runs:
+  using: 'composite'
+  steps:
+    - name: Run a command
+      run: echo "crie ${{ inputs.command }}"
+      shell: bash
