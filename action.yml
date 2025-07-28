@@ -4,7 +4,7 @@ inputs:
   runtime:
     description: 'Container runtime to use (podman, docker)'
     required: false
-    default: 'podman'
+    default: 'docker'
   only_changed_files:
     description: 'Only process files changed from a target branch'
     required: false
@@ -36,6 +36,15 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Set up Docker
+      if: ${{ inputs.runtime == 'docker' }}
+      uses: docker/setup-docker-action@v4
+    - name: Set up Podman
+      if: ${{ inputs.runtime == 'podman' }}
+      run: |
+        apt-get update
+        apt-get -y install podman
+      shell: bash
     - name: Run a command
-      run: echo "crie ${{ inputs.command }}"
+      run: crie ${{ inputs.command }}
       shell: bash
