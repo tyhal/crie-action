@@ -16,9 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: tyhal/crie@main
-        with:
-          only_changed_files: true
-          target_branch: origin/main # this is the branch to compare our current workspace against to detect changes
 ```
 
 ## Repository
