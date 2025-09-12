@@ -5,46 +5,78 @@ inputs:
     description: 'Container runtime to use (podman, docker)'
     required: false
     default: 'docker'
-  only_changed_files:
-    description: 'Only process files changed from a target branch'
-    required: false
-    default: false
-  target_branch:
-    description: 'The branch to reference to calculate files that have changed'
-    required: false
-    default: 'origin/main'
   command:
     description: 'The crie command to run'
     required: false
     default: 'chk'
-  show_passes:
+  # config options
+  project_config_path:
+    description: "override the project config location"
+    required: false
+    default: ""
+  language_config_path:
+    description: "override the language config location"
+    required: false
+    default: ""
+  # logging options
+  log_json:
+    description: 'enable json logging format'
+    required: false
+    default: ""
+  log_verbose:
+    description: 'enable verbose logging'
+    required: false
+    default: ""
+  log_quiet:
+    description: 'enable quiet logging'
+    required: false
+    default: ""
+  # linting options
+  lint_continue:
+    description: 'show all errors rather than stopping at the first'
+    required: false
+    default: "true"
+  lint_passes:
     description: 'List files even if they pass'
     required: false
-    default: true
-  fail_fast:
-    description: 'Exit as soon as one stage fails'
+    default: "true"
+  lint_git_diff:
+    description: 'Only process files changed from a target branch'
     required: false
-    default: false
-  language:
+    default: ""
+  lint_git_target:
+    description: 'The branch to reference to calculate files that have changed'
+    required: false
+    default: "origin/${{ github.base_ref || github.ref_name }}"
+  lint_lang:
     description: 'If set then only process files associated with the given language'
     required: false
     default: ""
-  json_logging:
-    description: 'enable json logging format'
-    required: false
-    default: false
+
 runs:
   using: 'composite'
   steps:
+    - name: Install crie
+      run: ./script/install-crie.sh
     - name: Set up Docker
       if: ${{ inputs.runtime == 'docker' }}
       uses: docker/setup-docker-action@v4
     - name: Set up Podman
       if: ${{ inputs.runtime == 'podman' }}
-      run: |
-        apt-get update
-        apt-get -y install podman
-      shell: bash
-    - name: Run a command
+      run: ./script/install-podman.sh
+    - name: Run crie
+      env:
+        # config
+        CRIE_PROJECTCONFIGPATH: ${{ inputs.project_config_path }}
+        CRIE_LANGUAGECONFIGPATH: ${{ inputs.language_config_path }}
+        # log
+        CRIE_LOG_JSON: ${{ inputs.log_json }}
+        CRIE_LOG_VERBOSE: ${{ inputs.log_verbose }}
+        CRIE_LOG_QUIET: ${{ inputs.log_quiet }}
+        # linting
+        CRIE_LINT_CONTINUE: ${{ inputs.lint_continue }}
+        CRIE_LINT_PASSES: ${{ inputs.lint_passes }}
+        CRIE_LINT_GITDIFF: ${{ inputs.lint_git_diff }}
+        CRIE_LINT_GITTARGET: ${{ inputs.lint_git_target }}
+        CRIE_LINT_LANG: ${{ inputs.lint_lang }}
       run: crie ${{ inputs.command }}
-      shell: bash

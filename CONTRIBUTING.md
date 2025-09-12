@@ -1,6 +1,7 @@
 
 ```shell
-bew install act
+brew install act
 
-act -P ubuntu-latest=ubuntu:22.04 -W test/workflow.yml
+# ! this runs the action locally
+act -P ubuntu-latest=-self-hosted -W test/workflow.yml
 ```

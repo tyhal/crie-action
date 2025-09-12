@@ -6,8 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./ # tyhal/crie@main
+      - uses: ./  # tyhal/crie@main
         with:
           runtime: podman
-          only_changed_files: true
-          target_branch: origin/main # this is the branch to compare our current workspace against to detect changes
+          command: chk
+          log_verbose: false
+          lint_git_diff: true
+
