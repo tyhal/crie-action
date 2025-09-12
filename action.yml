@@ -67,8 +67,8 @@ runs:
     - name: Run crie
       env:
         # config
-        CRIE_PROJECTCONFIGPATH: ${{ inputs.project_config_path }}
-        CRIE_LANGUAGECONFIGPATH: ${{ inputs.language_config_path }}
+        CRIE_PROJECT_CONFIG: ${{ inputs.project_config_path }}
+        CRIE_LANGUAGE_CONFIG: ${{ inputs.language_config_path }}
         # log
         CRIE_LOG_JSON: ${{ inputs.log_json }}
         CRIE_LOG_VERBOSE: ${{ inputs.log_verbose }}
