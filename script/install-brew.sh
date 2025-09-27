@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-target_cmd=crie
+target_cmd=brew
 has_command() {
         command -v "$1" >/dev/null 2>&1
 }
@@ -12,12 +12,4 @@ else
     echo "📦 Installing $target_cmd..."
 fi
 
-install_with_brew() {
-  brew install tyhal/tap/$target_cmd
-}
-
-if has_command brew; then
-  install_with_brew
-else
-  echo "unknown package manager"
-fi
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
