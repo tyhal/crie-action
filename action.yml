@@ -57,17 +57,17 @@ runs:
   using: 'composite'
   steps:
     - name: Install brew
-      run: ./script/install-brew.sh
+      run: ${{ github.action_path }}/script/install-brew.sh
       shell: sh
     - name: Install crie
-      run: ./script/install-crie.sh
+      run: ${{ github.action_path }}/script/install-crie.sh
       shell: sh
     - name: Set up Docker
       if: ${{ inputs.runtime == 'docker' }}
       uses: docker/setup-docker-action@v4
     - name: Set up Podman
       if: ${{ inputs.runtime == 'podman' }}
-      run: ./script/install-podman.sh
+      run: ${{ github.action_path }}/script/install-podman.sh
       shell: sh
     - name: Run crie
       env:
