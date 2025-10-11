@@ -55,9 +55,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Install brew
-      run: ${{ github.action_path }}/script/install-brew.sh
-      shell: sh
     - name: Install crie
       run: ${{ github.action_path }}/script/install-crie.sh
       shell: sh
