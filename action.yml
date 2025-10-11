@@ -48,7 +48,7 @@ inputs:
     description: 'The branch to reference to calculate files that have changed'
     required: false
     default: "origin/${{ github.base_ref || github.ref_name }}"
-  lint_lang:
+  lint_only:
     description: 'If set then only process files associated with the given language'
     required: false
     default: ""
@@ -58,19 +58,22 @@ runs:
   steps:
     - name: Install brew
       run: ./script/install-brew.sh
+      shell: sh
     - name: Install crie
       run: ./script/install-crie.sh
+      shell: sh
     - name: Set up Docker
       if: ${{ inputs.runtime == 'docker' }}
       uses: docker/setup-docker-action@v4
     - name: Set up Podman
       if: ${{ inputs.runtime == 'podman' }}
       run: ./script/install-podman.sh
+      shell: sh
     - name: Run crie
       env:
         # config
-        CRIE_PROJECT_CONFIG: ${{ inputs.project_config_path }}
-        CRIE_LANGUAGE_CONFIG: ${{ inputs.language_config_path }}
+        CRIE_PROJECT_CONF: ${{ inputs.project_config_path }}
+        CRIE_LANGUAGE_CONF: ${{ inputs.language_config_path }}
         # log
         CRIE_LOG_JSON: ${{ inputs.log_json }}
         CRIE_LOG_VERBOSE: ${{ inputs.log_verbose }}
@@ -80,5 +83,6 @@ runs:
         CRIE_LINT_PASSES: ${{ inputs.lint_passes }}
         CRIE_LINT_GITDIFF: ${{ inputs.lint_git_diff }}
         CRIE_LINT_GITTARGET: ${{ inputs.lint_git_target }}
-        CRIE_LINT_LANG: ${{ inputs.lint_lang }}
+        CRIE_LINT_ONLY: ${{ inputs.lint_only }}
       run: crie ${{ inputs.command }}
+      shell: sh
