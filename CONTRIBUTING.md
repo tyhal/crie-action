@@ -1,4 +1,3 @@
-
 ```shell
 brew install act
 

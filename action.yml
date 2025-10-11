@@ -52,7 +52,6 @@ inputs:
     description: 'If set then only process files associated with the given language'
     required: false
     default: ""
-
 runs:
   using: 'composite'
   steps:
