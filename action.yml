@@ -47,7 +47,7 @@ inputs:
   lint_git_target:
     description: 'The branch to reference to calculate files that have changed'
     required: false
-    default: "origin/${{ github.base_ref || github.ref_name }}"
+    default: ""
   lint_only:
     description: 'If set then only process files associated with the given language'
     required: false
