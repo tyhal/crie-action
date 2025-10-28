@@ -8,7 +8,7 @@ jobs:
       - uses: ./ # tyhal/crie@main
         with:
           runtime: podman
-          command: non
+          command: ls
           log_verbose: false
           lint_passes: true
           lint_git_diff: true

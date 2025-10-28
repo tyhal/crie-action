@@ -55,17 +55,28 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Check if we need crie
+      id: check_crie
+      run: |
+        if ! command -v crie >/dev/null 2>&1; then
+          echo "install=true" >> $GITHUB_OUTPUT
+        else
+          echo "install=false" >> $GITHUB_OUTPUT
+        fi
+      shell: sh
     - name: Set up Homebrew
-      uses: Homebrew/actions/setup-homebrew@v2
+      if: ${{ steps.check_crie.outputs.install == 'true' || inputs.runtime == 'podman' }}
+      uses: Homebrew/actions/setup-homebrew@main
     - name: Install crie
-      run: ${{ github.action_path }}/script/install-crie.sh
+      if: ${{ steps.check_crie.outputs.install == 'true' }}
+      run: brew install --cask tyhal/tap/crie
       shell: sh
     - name: Set up Docker
       if: ${{ inputs.runtime == 'docker' }}
       uses: docker/setup-docker-action@v4
     - name: Set up Podman
       if: ${{ inputs.runtime == 'podman' }}
-      run: ${{ github.action_path }}/script/install-podman.sh
+      run: brew install podman && brew services start podman
       shell: sh
     - name: Run crie
       env:
