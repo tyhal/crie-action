@@ -18,6 +18,7 @@ enure_brew() {
 	else
 		echo "📦 Installing $target_cmd..."
 		install_brew
+		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 	fi
 }
 
