@@ -55,6 +55,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Set up Homebrew
+      uses: Homebrew/actions/setup-homebrew@v2
     - name: Install crie
       run: ${{ github.action_path }}/script/install-crie.sh
       shell: sh
