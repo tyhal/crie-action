@@ -69,7 +69,7 @@ runs:
       uses: Homebrew/actions/setup-homebrew@main
     - name: Install crie
       if: ${{ steps.check_crie.outputs.install == 'true' }}
-      run: brew install --cask tyhal/tap/crie
+      run: brew install tyhal/tap/crie
       shell: sh
     - name: Set up Docker
       if: ${{ inputs.runtime == 'docker' }}
