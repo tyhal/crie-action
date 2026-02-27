@@ -18,6 +18,11 @@ inputs:
     description: "override the language config location"
     required: false
     default: ""
+  # dir option
+  dir:
+    description: "which dir to run the tool from"
+    required: false
+    default: ""
   # logging options
   log_json:
     description: 'enable json logging format'
@@ -87,6 +92,8 @@ runs:
         CRIE_LOG_JSON: ${{ inputs.log_json }}
         CRIE_LOG_VERBOSE: ${{ inputs.log_verbose }}
         CRIE_LOG_QUIET: ${{ inputs.log_quiet }}
+        # dir
+        CRIE_DIR: ${{ inputs.dir }}
         # linting
         CRIE_LINT_CONTINUE: ${{ inputs.lint_continue }}
         CRIE_LINT_PASSES: ${{ inputs.lint_passes }}
