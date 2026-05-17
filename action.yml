@@ -1,10 +1,6 @@
 name: 'crie'
 description: 'Universal meta-linter using containerized execution'
 inputs:
-  runtime:
-    description: 'Container runtime to use (podman, docker)'
-    required: false
-    default: 'docker'
   command:
     description: 'The crie command to run'
     required: false
@@ -70,18 +66,11 @@ runs:
         fi
       shell: sh
     - name: Set up Homebrew
-      if: ${{ steps.check_crie.outputs.install == 'true' || inputs.runtime == 'podman' }}
-      uses: Homebrew/actions/setup-homebrew@main
+      if: ${{ steps.check_crie.outputs.install == 'true' }}
+      uses: Homebrew/actions/setup-homebrew@8eb7f2efa6ab636da09aef605b497fd5b8a7587d
     - name: Install crie
       if: ${{ steps.check_crie.outputs.install == 'true' }}
       run: brew install tyhal/tap/crie
-      shell: sh
-    - name: Set up Docker
-      if: ${{ inputs.runtime == 'docker' }}
-      uses: docker/setup-docker-action@v4
-    - name: Set up Podman
-      if: ${{ inputs.runtime == 'podman' }}
-      run: brew install podman && brew services start podman
       shell: sh
     - name: Run crie
       env:
